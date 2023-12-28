@@ -90,12 +90,12 @@
         <div class="pcoded-container navbar-wrapper">
             <nav class="navbar header-navbar pcoded-header">
                 <div class="navbar-wrapper">
-                    <div class="navbar-logo">
+                    <div class="navbar-logo  text-center">
                         <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="#!">
                             <i class="ti-menu"></i>
                         </a>
-                        <a href="index.html">
-                            <img class="img-fluid" src="/assets/images/logo.png" alt="Theme-Logo" />
+                        <a href="/admin/beranda">
+                            <h4 class="fw-bold ml-5 mt-1">SPK-TNI</h4>
                         </a>
                         <a class="mobile-options waves-effect waves-light">
                             <i class="ti-more"></i>
