@@ -197,6 +197,70 @@
             </div>
         </section>
 
+        <section class="action-box pattern full-width"
+            style="background: url(/landing/images/pattern/pattern-bg.png) repeat;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 position-relative">
+                        <div class="action-box-text">
+                            <h3>Mekanisme Pendaftaran</h3>
+                            <p>Berikut adalah tata cara pendaftaran untuk menjadi Calon Prajurit TNI pada Penerimaan Pa
+                                PK TNI (Reguler) TA 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section-ptb">
+            <div class="container">
+                <div class="row">
+                    <table class="table table-1 table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Tahapan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td style="text-align: left;">Calon mendaftar secara online melalui internet dengan website {{ env('APP_URL') }}
+                                    dan mengisi form Registrasi;</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td style="text-align: left;">Daftar ulang secara fisik ke tempat pendaftaran yang telah ditentukan dengan
+                                    menunjuk-kan cetakan formulir pendaftaran. Pada saat melakukan daftar ulang secara
+                                    fisik, calon diharuskan membawa kelengkapan dokumen asli sebagai berikut:<ol>
+                                        <li>Formulir/Surat Pendaftaran</li>
+                                        <li>Akte Kelahiran</li>
+                                        <li>KTP Calon</li>
+                                        <li>KTP Orang Tua Calon / Wali</li>
+                                        <li>Kartu Keluarga (KK)</li>
+                                        <li>SKCK</li>
+                                        <li>Ijazah dan SKHUN SD, SLTP, SLTA, Raport SLTA / Sederajat</li>
+                                        <li>Ijazah Kesarjanaan atau Diploma</li>
+                                        <li>Sertifikat akreditasi yang dikeluarkan oleh BAN PT untuk program studinya
+                                        </li>
+                                        <li>Pas foto hitam putih dan berwarna (memakai pakaian kemeja) ukuran 4x6: 20
+                                            lembar, 3x4: 10 lembar, dan 2x3: 10 lembar</li>
+                                        <li>Bagi yang pindah domisili membawa surat keterangan pindah domisili dari
+                                            kelurahan / kecamatan</li>
+                                        <li>Masing-masing difotocopy satu lembar dan dilegalisir</li>
+                                        <li>Surat keterangan bebas narkoba dan surat kesehatan dari rumah sakit
+                                            pemerintah</li>
+                                        <li>Jangan lupa untuk membawa Kartu BPJS dan membawa formulir pendaftaran ini.
+                                        </li>
+                                    </ol>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
 
         @if ($result != null)
             <div class="modal fade" id="announcementModal" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -231,30 +295,30 @@
                                     <div class="col">
                                         Jasmani
                                         <div class="alert alert-info text-center" role="alert">
-                                            @if($result->status_jas == null)
-                                            Belum ada Nilai
+                                            @if ($result->penilaian->bobot_jas == null)
+                                                Belum ada Nilai
                                             @else
-                                            {{ $result->status_jas }}
+                                                {{ $result->penilaian->bobot_jas->deskripsi }}
                                             @endif
                                         </div>
                                     </div>
                                     <div class="col">
                                         Kesehatan
                                         <div class="alert alert-info text-center" role="alert">
-                                            @if($result->status_kes == null)
-                                            Belum ada Nilai
+                                            @if ($result->penilaian->bobot_kes == null)
+                                                Belum ada Nilai
                                             @else
-                                            {{ $result->status_kes }}
+                                                {{ $result->penilaian->bobot_kes->deskripsi }}
                                             @endif
                                         </div>
                                     </div>
                                     <div class="col">
                                         Administrasi
                                         <div class="alert alert-info text-center" role="alert">
-                                            @if($result->status_min == null)
-                                            Belum ada Nilai
+                                            @if ($result->penilaian->bobot_min == null)
+                                                Belum ada Nilai
                                             @else
-                                            {{ $result->status_min }}
+                                                {{ $result->penilaian->bobot_min->deskripsi }}
                                             @endif
                                         </div>
                                     </div>

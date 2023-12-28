@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CalonPeserta extends Model
 {
@@ -37,16 +39,11 @@ class CalonPeserta extends Model
         'jurusan_dikum',
         'nama_sekolah',
         'nilai_uan',
-        'nilai_jas',
-        'status_jas',
-        'keterangan_jas',
-        'nilai_kes',
-        'status_kes',
-        'keterangan_kes',
-        'nilai_min',
-        'status_min',
-        'keterangan_min',
         'status_kelulusan',
         'tanggal_daftar',
     ];
+
+    public function penilaian(): HasOne {
+        return $this->hasOne(Penilaian::class, 'penilaian_id');
+    }
 }

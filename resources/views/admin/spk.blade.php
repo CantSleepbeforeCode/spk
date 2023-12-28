@@ -10,7 +10,7 @@
 
     <script>
         $('#table').dataTable({
-            ordering: false
+            order: [4, 'desc']
         });
     </script>
 @endsection
@@ -78,18 +78,28 @@
                                                 <th>Nama Lengkap</th>
                                                 <th>Jenis Kelamin</th>
                                                 <th>Nomor Telepon</th>
-                                                <th>Nilai UAN</th>
+                                                <th>Bobot</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($participants as $participant)
+                                            @php
+                                            try {
+                                                $bobot = $participant->penilaian->bobot_min->nilai + $participant->penilaian->bobot_kes->nilai + $participant->penilaian->bobot_jas->nilai;
+                                                if ($bobot <= 0) {
+                                                    $isGraduate = false;
+                                                }
+                                            } catch(Exception $e) {
+                                                abort(505);
+                                            }
+                                            @endphp
                                                 <tr>
                                                     <th scope="row">{{ $participant->nomor_peserta }}</th>
                                                     <td>{{ $participant->nama_lengkap }}</td>
                                                     <td>{{ $participant->jenis_kelamin }}</td>
                                                     <td>{{ $participant->nomor_telepon }}</td>
-                                                    <td>{{ $participant->nilai_uan }}</td>
+                                                    <td>{{ $bobot }}</td>
                                                     <td>
                                                         <button class="btn btn-sm ml-2 mb-2 btn-primary" data-toggle="modal"
                                                             data-target="#assignModal{{ $participant->id }}">Keputusan
@@ -243,82 +253,97 @@
                                                 <div class="row">
                                                     <div class="col-4">Nilai Jasmani</div>
                                                     <div class="col-1">:</div>
-                                                    @if ($participant->nilai_jas == null)
+                                                    @if ($participant->penilaian->bobot_jas == null)
                                                         <div class="col">-</div>
                                                     @else
-                                                        <div class="col">{{ $participant->nilai_jas }}</div>
+                                                        <div class="col">
+                                                            {{ $participant->penilaian->bobot_jas->sub_kategori }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">Status Jasmani</div>
                                                     <div class="col-1">:</div>
-                                                    @if ($participant->status_jas == null)
+                                                    @if ($participant->penilaian->bobot_jas == null)
                                                         <div class="col">-</div>
                                                     @else
-                                                        <div class="col">{{ $participant->status_jas }}</div>
+                                                        <div class="col">
+                                                            {{ $participant->penilaian->bobot_jas->deskripsi }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">Keterangan Jasmani</div>
                                                     <div class="col-1">:</div>
-                                                    @if ($participant->keterangan_jas == null)
+                                                    @if ($participant->penilaian->keterangan_jas == null)
                                                         <div class="col">-</div>
                                                     @else
-                                                        <div class="col">{{ $participant->keterangan_jas }}</div>
+                                                        <div class="col">{{ $participant->penilaian->keterangan_jas }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">Nilai Kesehatan</div>
                                                     <div class="col-1">:</div>
-                                                    @if ($participant->nilai_kes == null)
+                                                    @if ($participant->penilaian->bobot_kes == null)
                                                         <div class="col">-</div>
                                                     @else
-                                                        <div class="col">{{ $participant->nilai_kes }}</div>
+                                                        <div class="col">
+                                                            {{ $participant->penilaian->bobot_kes->sub_kategori }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">Status Kesehatan</div>
                                                     <div class="col-1">:</div>
-                                                    @if ($participant->status_kes == null)
+                                                    @if ($participant->penilaian->bobot_kes == null)
                                                         <div class="col">-</div>
                                                     @else
-                                                        <div class="col">{{ $participant->status_kes }}</div>
+                                                        <div class="col">
+                                                            {{ $participant->penilaian->bobot_kes->deskripsi }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">Keterangan Kesehatan</div>
                                                     <div class="col-1">:</div>
-                                                    @if ($participant->keterangan_kes == null)
+                                                    @if ($participant->penilaian->keterangan_kes == null)
                                                         <div class="col">-</div>
                                                     @else
-                                                        <div class="col">{{ $participant->keterangan_kes }}</div>
+                                                        <div class="col">{{ $participant->penilaian->keterangan_kes }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">Nilai Administrasi</div>
                                                     <div class="col-1">:</div>
-                                                    @if ($participant->nilai_min == null)
+                                                    @if ($participant->penilaian->bobot_min == null)
                                                         <div class="col">-</div>
                                                     @else
-                                                        <div class="col">{{ $participant->nilai_min }}</div>
+                                                        <div class="col">
+                                                            {{ $participant->penilaian->bobot_min->sub_kategori }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">Status Administrasi</div>
                                                     <div class="col-1">:</div>
-                                                    @if ($participant->status_min == null)
+                                                    @if ($participant->penilaian->bobot_min == null)
                                                         <div class="col">-</div>
                                                     @else
-                                                        <div class="col">{{ $participant->status_min }}</div>
+                                                        <div class="col">
+                                                            {{ $participant->penilaian->bobot_min->deskripsi }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-4">Keterangan Administrasi</div>
                                                     <div class="col-1">:</div>
-                                                    @if ($participant->keterangan_min == null)
+                                                    @if ($participant->penilaian->keterangan_min == null)
                                                         <div class="col">-</div>
                                                     @else
-                                                        <div class="col">{{ $participant->keterangan_min }}</div>
+                                                        <div class="col">{{ $participant->penilaian->keterangan_min }}
+                                                        </div>
                                                     @endif
                                                 </div>
                                             </div>
@@ -336,9 +361,13 @@
                                                     </select>
                                                     @php
                                                         $isGraduate = true;
-
-                                                        if ($participant->nilai_jas == 'TL' || $participant->nilai_kes == 4 || $participant->nilai_min == 'TMS') {
-                                                            $isGraduate = false;
+                                                        try {
+                                                            $bobot = $participant->penilaian->bobot_min->nilai + $participant->penilaian->bobot_kes->nilai + $participant->penilaian->bobot_jas->nilai;
+                                                            if ($bobot <= 0) {
+                                                                $isGraduate = false;
+                                                            }
+                                                        } catch(Exception $e) {
+                                                            abort(505);
                                                         }
                                                     @endphp
                                                     <small class="form-text text-muted">Rekomendasi Kelulusan: @if ($isGraduate)

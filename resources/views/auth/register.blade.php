@@ -177,6 +177,23 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="form-group col">
+                                            <label for="nilai_uan">Satuan Wilayah</label>
+                                            <select name="kodim" class="form-control" required>
+                                                <option value="">--- Pilih Satuan Wilayah ---</option>
+                                                <option value="0901/Samarinda">0901/Samarinda</option>
+                                                <option value="0902/Berau">0902/Berau</option>
+                                                <option value="0904/Tanah Grogot">0904/Tanah Grogot</option>
+                                                <option value="0906/Kutai Kartanegara">0906/Kutai Kartanegara</option>
+                                                <option value="0908/Bontang">0908/Bontang</option>
+                                                <option value="0909/Kutai Timur">0909/Kutai Timur</option>
+                                                <option value="0912/Kutai Barat">0912/Kutai Barat</option>
+                                                <option value="0913/Penajam Paser Utara">0913/Penajam Paser Utara</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="form-group col-6">
                                             <label for="nama_ortu">Nama Orang Tua</label>
                                             <input id="nama_ortu" type="text" class="form-control"

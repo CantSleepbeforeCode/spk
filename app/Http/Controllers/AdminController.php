@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bobot;
 use App\Models\CalonPeserta;
+use App\Models\Penilaian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -32,44 +34,39 @@ class AdminController extends Controller
     }
 
     public function participant() {
-        $participants = CalonPeserta::all();
-        return view('admin.participant', ['participants' => $participants]);
+        $participants = CalonPeserta::with('penilaian.bobot_min','penilaian.bobot_kes','penilaian.bobot_jas')->get();
+        $bobots = Bobot::all();
+        return view('admin.participant', ['participants' => $participants, 'bobots' => $bobots]);
     }
 
     public function spk() {
-        $participants = CalonPeserta::where([
-            ['status_kelulusan', '=', null],
-            ['nilai_jas', '!=', null],
-            ['nilai_kes', '!=', null],
-            ['nilai_min', '!=', null],
-        ])->orderBy('nilai_uan', 'desc')->get();
+        // $participants = CalonPeserta::with('penilaian.bobot_min','penilaian.bobot_kes','penilaian.bobot_jas')->where([
+        //     ['status_kelulusan', '=', null],
+        //     ['nilai_jas', '!=', null],
+        //     ['nilai_kes', '!=', null],
+        //     ['nilai_min', '!=', null],
+        // ])->orderBy('nilai_uan', 'desc')->get();
+        $participants = CalonPeserta::with('penilaian.bobot_min','penilaian.bobot_kes','penilaian.bobot_jas')->whereHas('penilaian', function($query) {
+            return $query->where([
+                ['nilai_jas', '!=', null],
+                ['nilai_kes', '!=', null],
+                ['nilai_min', '!=', null],
+            ]);
+        })->get();
         return view('admin.spk', ['participants' => $participants]);
     }
 
     public function grade(Request $request) {
         $participant = CalonPeserta::find($request->id);
-        $participant->nilai_jas = $request->nilai_jas;
-        $participant->nilai_kes = $request->nilai_kes;
-        $participant->nilai_min = $request->nilai_min;
-        $participant->keterangan_jas = $request->keterangan_jas;
-        $participant->keterangan_kes = $request->keterangan_kes;
-        $participant->keterangan_min = $request->keterangan_min;
+        $penilaian = Penilaian::where('calon_peserta_id', $participant->id)->first();
+        $penilaian->nilai_jas = $request->nilai_jas;
+        $penilaian->nilai_kes = $request->nilai_kes;
+        $penilaian->nilai_min = $request->nilai_min;
+        $penilaian->keterangan_jas = $request->keterangan_jas;
+        $penilaian->keterangan_kes = $request->keterangan_kes;
+        $penilaian->keterangan_min = $request->keterangan_min;
 
-        if($request->nilai_jas == 'L') {
-            $participant->status_jas = 'Lulus';
-        } else {
-            $participant->status_jas = 'Tidak Lulus';
-        }
-
-        $participant->status_kes = 'STAKES ' . $request->nilai_kes;
-
-        if($request->nilai_min == 'MS') {
-            $participant->status_min = 'Memenuhi Syarat';
-        } else {
-            $participant->status_min = 'Tidak Memenuhi Syarat';
-        }
-
-        $participant->save();
+        $penilaian->save();
         return redirect()->back()->with('success', 'Berhasil memberi nilai kepada ' . $participant->nama_lengkap);
     }
 

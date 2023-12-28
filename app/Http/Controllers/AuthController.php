@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CalonPeserta;
+use App\Models\Penilaian;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,7 +70,12 @@ class AuthController extends Controller
                 $newUser->jurusan_dikum = $request->jurusan_dikum;
                 $newUser->nama_sekolah = $request->nama_sekolah;
                 $newUser->nilai_uan = $request->nilai_uan;
+                $newUser->kodim = $request->kodim;
                 $newUser->save();
+
+                $newPenilaian = new Penilaian();
+                $newPenilaian->calon_peserta_id = $newUser->id;
+                $newPenilaian->save();
                 
                 return back()->with('success', 'Berhasil mendaftar. Berikut Nomor Peserta anda: ' . $newUser->nomor_peserta);
             } else {

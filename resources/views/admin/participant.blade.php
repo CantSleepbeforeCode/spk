@@ -247,82 +247,88 @@
                                         <div class="row">
                                             <div class="col-4">Nilai Jasmani</div>
                                             <div class="col-1">:</div>
-                                            @if ($participant->nilai_jas == null)
+                                            @if ($participant->penilaian->bobot_jas == null)
                                                 <div class="col">-</div>
                                             @else
-                                                <div class="col">{{ $participant->nilai_jas }}</div>
+                                                <div class="col">{{ $participant->penilaian->bobot_jas->sub_kategori }}
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="row">
                                             <div class="col-4">Status Jasmani</div>
                                             <div class="col-1">:</div>
-                                            @if ($participant->status_jas == null)
+                                            @if ($participant->penilaian->bobot_jas == null)
                                                 <div class="col">-</div>
                                             @else
-                                                <div class="col">{{ $participant->status_jas }}</div>
+                                                <div class="col">{{ $participant->penilaian->bobot_jas->deskripsi }}
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="row">
                                             <div class="col-4">Keterangan Jasmani</div>
                                             <div class="col-1">:</div>
-                                            @if ($participant->keterangan_jas == null)
+                                            @if ($participant->penilaian->keterangan_jas == null)
                                                 <div class="col">-</div>
                                             @else
-                                                <div class="col">{{ $participant->keterangan_jas }}</div>
+                                                <div class="col">{{ $participant->penilaian->keterangan_jas }}</div>
                                             @endif
                                         </div>
                                         <div class="row">
                                             <div class="col-4">Nilai Kesehatan</div>
                                             <div class="col-1">:</div>
-                                            @if ($participant->nilai_kes == null)
+                                            @if ($participant->penilaian->bobot_kes == null)
                                                 <div class="col">-</div>
                                             @else
-                                                <div class="col">{{ $participant->nilai_kes }}</div>
+                                                <div class="col">{{ $participant->penilaian->bobot_kes->sub_kategori }}
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="row">
                                             <div class="col-4">Status Kesehatan</div>
                                             <div class="col-1">:</div>
-                                            @if ($participant->status_kes == null)
+                                            @if ($participant->penilaian->bobot_kes == null)
                                                 <div class="col">-</div>
                                             @else
-                                                <div class="col">{{ $participant->status_kes }}</div>
+                                                <div class="col">{{ $participant->penilaian->bobot_kes->deskripsi }}
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="row">
                                             <div class="col-4">Keterangan Kesehatan</div>
                                             <div class="col-1">:</div>
-                                            @if ($participant->keterangan_kes == null)
+                                            @if ($participant->penilaian->keterangan_kes == null)
                                                 <div class="col">-</div>
                                             @else
-                                                <div class="col">{{ $participant->keterangan_kes }}</div>
+                                                <div class="col">{{ $participant->penilaian->keterangan_kes }}</div>
                                             @endif
                                         </div>
                                         <div class="row">
                                             <div class="col-4">Nilai Administrasi</div>
                                             <div class="col-1">:</div>
-                                            @if ($participant->nilai_min == null)
+                                            @if ($participant->penilaian->bobot_min == null)
                                                 <div class="col">-</div>
                                             @else
-                                                <div class="col">{{ $participant->nilai_min }}</div>
+                                                <div class="col">{{ $participant->penilaian->bobot_min->sub_kategori }}
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="row">
                                             <div class="col-4">Status Administrasi</div>
                                             <div class="col-1">:</div>
-                                            @if ($participant->status_min == null)
+                                            @if ($participant->penilaian->bobot_min == null)
                                                 <div class="col">-</div>
                                             @else
-                                                <div class="col">{{ $participant->status_min }}</div>
+                                                <div class="col">{{ $participant->penilaian->bobot_min->deskripsi }}
+                                                </div>
                                             @endif
                                         </div>
                                         <div class="row">
                                             <div class="col-4">Keterangan Administrasi</div>
                                             <div class="col-1">:</div>
-                                            @if ($participant->keterangan_min == null)
+                                            @if ($participant->penilaian->keterangan_min == null)
                                                 <div class="col">-</div>
                                             @else
-                                                <div class="col">{{ $participant->keterangan_min }}</div>
+                                                <div class="col">{{ $participant->penilaian->keterangan_min }}</div>
                                             @endif
                                         </div>
                                         <hr class="mt-5 mb-5">
@@ -381,17 +387,23 @@
                                                         <select class="form-control" name="nilai_jas" id=""
                                                             required>
                                                             <option value="">=== Pilih Nilai ===</option>
-                                                            <option value="TL"
-                                                                @if ($participant->nilai_jas == 'TL') selected @endif>Tidak
-                                                                Lulus</option>
-                                                            <option value="L"
-                                                                @if ($participant->nilai_jas == 'L') selected @endif>Lulus
-                                                            </option>
+                                                            @foreach ($bobots as $bobot)
+                                                                @if ($bobot->kategori == 'jas')
+                                                                    @if ($participant->penilaian->nilai_jas == $bobot->bobot_id)
+                                                                        <option value="{{ $bobot->bobot_id }}" selected>
+                                                                            {{ $bobot->deskripsi }}</option>
+                                                                    @else
+                                                                        <option value="{{ $bobot->bobot_id }}">
+                                                                            {{ $bobot->deskripsi }}</option>
+                                                                    @endif
+                                                                @endif
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Keterangan</label>
-                                                        <input type="text" value="{{$participant->keterangan_jas}}" class="form-control" name="keterangan_jas"
+                                                        <input type="text" value="{{ $participant->penilaian->keterangan_jas }}"
+                                                            class="form-control" name="keterangan_jas"
                                                             placeholder="Keterangan">
                                                     </div>
                                                 </div>
@@ -404,23 +416,23 @@
                                                         <select class="form-control" name="nilai_kes" id=""
                                                             required>
                                                             <option value="">=== Pilih Nilai ===</option>
-                                                            <option value="4"
-                                                                @if ($participant->nilai_kes == '4') selected @endif>
-                                                                STAKES 4</option>
-                                                            <option value="3"
-                                                                @if ($participant->nilai_kes == '3') selected @endif>
-                                                                STAKES 3</option>
-                                                            <option value="2"
-                                                                @if ($participant->nilai_kes == '2') selected @endif>
-                                                                STAKES 2</option>
-                                                            <option value="1"
-                                                                @if ($participant->nilai_kes == '1') selected @endif>
-                                                                STAKES 1</option>
+                                                            @foreach ($bobots as $bobot)
+                                                                @if ($bobot->kategori == 'kes')
+                                                                    @if ($participant->penilaian->nilai_kes == $bobot->bobot_id)
+                                                                        <option value="{{ $bobot->bobot_id }}" selected>
+                                                                            {{ $bobot->deskripsi }}</option>
+                                                                    @else
+                                                                        <option value="{{ $bobot->bobot_id }}">
+                                                                            {{ $bobot->deskripsi }}</option>
+                                                                    @endif
+                                                                @endif
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Keterangan</label>
-                                                        <input type="text" value="{{$participant->keterangan_kes}}" class="form-control" name="keterangan_kes"
+                                                        <input type="text" value="{{ $participant->penilaian->keterangan_kes }}"
+                                                            class="form-control" name="keterangan_kes"
                                                             placeholder="Keterangan">
                                                     </div>
                                                 </div>
@@ -433,17 +445,23 @@
                                                         <select class="form-control" name="nilai_min" id=""
                                                             required>
                                                             <option value="">=== Pilih Nilai ===</option>
-                                                            <option value="TMS"
-                                                                @if ($participant->nilai_min == 'TMS') selected @endif>Tidak
-                                                                Memenuhi Syarat</option>
-                                                            <option value="MS"
-                                                                @if ($participant->nilai_min == 'MS') selected @endif>
-                                                                Memenuhi Syarat</option>
+                                                            @foreach ($bobots as $bobot)
+                                                                @if ($bobot->kategori == 'min')
+                                                                    @if ($participant->penilaian->nilai_min == $bobot->bobot_id)
+                                                                        <option value="{{ $bobot->bobot_id }}" selected>
+                                                                            {{ $bobot->deskripsi }}</option>
+                                                                    @else
+                                                                        <option value="{{ $bobot->bobot_id }}">
+                                                                            {{ $bobot->deskripsi }}</option>
+                                                                    @endif
+                                                                @endif
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Keterangan</label>
-                                                        <input type="text" value="{{$participant->keterangan_min}}" class="form-control" name="keterangan_min"
+                                                        <input type="text" value="{{ $participant->keterangan_min }}"
+                                                            class="form-control" name="keterangan_min"
                                                             placeholder="Keterangan">
                                                     </div>
                                                 </div>

@@ -12,7 +12,7 @@ class LandingController extends Controller
         $result = null;
         $query = null;
         if ($request->method() == 'POST') {
-            $calonPeserta = CalonPeserta::where('nomor_peserta', $request->nomor_peserta)->first();
+            $calonPeserta = CalonPeserta::with('penilaian.bobot_min','penilaian.bobot_kes','penilaian.bobot_jas')->where('nomor_peserta', $request->nomor_peserta)->first();
             if($calonPeserta != null) {
                 $result = $calonPeserta;
             } else {
