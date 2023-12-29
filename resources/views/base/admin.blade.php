@@ -168,6 +168,15 @@
                             </ul>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="">
+                                    <a href="/admin/bobot" class="waves-effect waves-dark">
+                                        <span class="pcoded-micon"><i class="ti-server"></i><b>BB</b></span>
+                                        <span class="pcoded-mtext">Bobot</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="pcoded-item pcoded-left-item">
+                                <li class="">
                                     <a href="/admin/lihat-peserta" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-user"></i><b>LP</b></span>
                                         <span class="pcoded-mtext">Peserta</span>

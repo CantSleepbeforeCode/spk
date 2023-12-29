@@ -39,6 +39,11 @@ class AdminController extends Controller
         return view('admin.participant', ['participants' => $participants, 'bobots' => $bobots]);
     }
 
+    public function bobot() {
+        $bobots = Bobot::all();
+        return view('admin.bobot', ['bobots' => $bobots]);
+    }
+
     public function spk() {
         // $participants = CalonPeserta::with('penilaian.bobot_min','penilaian.bobot_kes','penilaian.bobot_jas')->where([
         //     ['status_kelulusan', '=', null],
@@ -79,5 +84,50 @@ class AdminController extends Controller
         } else {
             return redirect()->back()->with('error', 'Berhasil mentidak luluskan ' . $participant->nama_lengkap);
         }
+    }
+
+    public function addBobot(Request $request) {
+        $bobot = new Bobot();
+        $bobot->kategori = $request->kategori;
+        $bobot->sub_kategori = $request->sub_kategori;
+        $bobot->deskripsi = $request->deskripsi;
+        $bobot->nilai = $request->nilai;
+        $bobot->save();
+        return redirect()->back()->with('success', 'Berhasil menambah bobot! ');
+    }
+
+    public function editBobot(Request $request) {
+        $bobot = Bobot::find($request->bobot);
+        $bobot->kategori = $request->kategori;
+        $bobot->sub_kategori = $request->sub_kategori;
+        $bobot->deskripsi = $request->deskripsi;
+        $bobot->nilai = $request->nilai;
+        $bobot->save();
+        return redirect()->back()->with('success', 'Berhasil mengubah bobot! ');
+    }
+
+    public function deleteBobot($id) {
+        $penilaianMins = Penilaian::where('nilai_min', $id)->get();
+        $penilaianKess = Penilaian::where('nilai_kes', $id)->get();
+        $penilaianJass = Penilaian::where('nilai_jas', $id)->get();
+
+        foreach($penilaianMins as $penilaianMin) {
+            $penilaianMin->nilai_min = null;
+            $penilaianMin->save();
+        }
+
+        foreach($penilaianKess as $penilaianKes) {
+            $penilaianKes->nilai_kes = null;
+            $penilaianKes->save();
+        }
+
+        foreach($penilaianJass as $penilaianJas) {
+            $penilaianJas->nilai_jas = null;
+            $penilaianJas->save();
+        }
+
+        $bobot = Bobot::find($id);
+        $bobot->delete();
+        return redirect()->back()->with('error', 'Berhasil menghapus bobot! ');
     }
 }

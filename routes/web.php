@@ -30,9 +30,13 @@ Route::post('/register', [AuthController::class, 'register']);
 // Admin
 Route::get('/admin/beranda', [AdminController::class, 'home']);
 Route::get('/admin/lihat-peserta', [AdminController::class, 'participant']);
+Route::get('/admin/bobot', [AdminController::class, 'bobot']);
+Route::get('/admin/hapus-bobot/{id}', [AdminController::class, 'deleteBobot']);
 Route::get('/admin/spk', [AdminController::class, 'spk']);
 
 Route::post('/admin/beri-nilai', [AdminController::class, 'grade']);
 Route::post('/admin/beri-kelulusan', [AdminController::class, 'graduate']);
+Route::post('/admin/tambah-bobot', [AdminController::class, 'addBobot']);
+Route::post('/admin/ubah-bobot', [AdminController::class, 'editBobot']);
 
 
