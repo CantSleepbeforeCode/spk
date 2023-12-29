@@ -44,6 +44,6 @@ class CalonPeserta extends Model
     ];
 
     public function penilaian(): HasOne {
-        return $this->hasOne(Penilaian::class, 'penilaian_id');
+        return $this->hasOne(Penilaian::class, 'calon_peserta_id');
     }
 }

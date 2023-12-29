@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CalonPeserta;
+use App\Models\Penilaian;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
@@ -13,6 +14,7 @@ class LandingController extends Controller
         $query = null;
         if ($request->method() == 'POST') {
             $calonPeserta = CalonPeserta::with('penilaian.bobot_min','penilaian.bobot_kes','penilaian.bobot_jas')->where('nomor_peserta', $request->nomor_peserta)->first();
+
             if($calonPeserta != null) {
                 $result = $calonPeserta;
             } else {
