@@ -87,7 +87,7 @@
                                             @php
                                             try {
                                                 $bobot = $participant->penilaian->bobot_min->nilai + $participant->penilaian->bobot_kes->nilai + $participant->penilaian->bobot_jas->nilai;
-                                                if ($bobot <= 233) {
+                                                if ($bobot < 233) {
                                                     $isGraduate = false;
                                                 }
                                             } catch(Exception $e) {
