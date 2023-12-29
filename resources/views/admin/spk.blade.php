@@ -363,7 +363,7 @@
                                                         $isGraduate = true;
                                                         try {
                                                             $bobot = $participant->penilaian->bobot_min->nilai + $participant->penilaian->bobot_kes->nilai + $participant->penilaian->bobot_jas->nilai;
-                                                            if ($bobot <= 0) {
+                                                            if ($bobot < 233) {
                                                                 $isGraduate = false;
                                                             }
                                                         } catch(Exception $e) {
