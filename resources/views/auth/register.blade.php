@@ -179,7 +179,7 @@
                                         <div class="form-group col">
                                             <label for="nilai_uan">Wilayah</label>
                                             <select name="kodim" class="form-control" required>
-                                                <option value="">--- Pilih Satuan Wilayah ---</option>
+                                                <option value="">--- Pilih Wilayah ---</option>
                                                 <option value="Balikpapan">Balikpapan</option>
                                                 <option value="Samarinda">Samarinda</option>
                                                 <option value="Berau">Berau</option>
