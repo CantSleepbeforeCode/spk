@@ -50,8 +50,8 @@ class AuthController extends Controller
 
                 $newUser = new CalonPeserta();
                 $newUser->nomor_peserta = $nextUser;
-                $newUser->nama_lengkap = $request->nama_lengkap;
-                $newUser->jenis_kelamin = $request->jenis_kelamin;
+                $newUser->nama_lengkap = strtoupper($request->nama_lengkap);
+                $newUser->jenis_kelamin = strtoupper($request->jenis_kelamin);
                 $newUser->tempat_lahir = $request->tempat_lahir;
                 $newUser->tanggal_lahir = $request->tanggal_lahir;
                 $newUser->tinggi_badan = $request->tinggi_badan;

@@ -33,10 +33,13 @@ Route::get('/admin/lihat-peserta', [AdminController::class, 'participant']);
 Route::get('/admin/bobot', [AdminController::class, 'bobot']);
 Route::get('/admin/hapus-bobot/{id}', [AdminController::class, 'deleteBobot']);
 Route::get('/admin/spk', [AdminController::class, 'spk']);
+Route::get('/admin/hapus-peserta/{id}', [AdminController::class, 'deleteParticipant']);
 
 Route::post('/admin/beri-nilai', [AdminController::class, 'grade']);
 Route::post('/admin/beri-kelulusan', [AdminController::class, 'graduate']);
 Route::post('/admin/tambah-bobot', [AdminController::class, 'addBobot']);
 Route::post('/admin/ubah-bobot', [AdminController::class, 'editBobot']);
+Route::post('/admin/tambah-peserta', [AdminController::class, 'addParticipant']);
+Route::post('/admin/ubah-peserta', [AdminController::class, 'editParticipant']);
 
 
